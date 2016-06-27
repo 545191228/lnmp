@@ -20,7 +20,6 @@ function customInstall()
         echo -e "\nPlease input (nginx|php|mysql|node|redis|xsearch),then start install"
         echo -e "\nThe queue nfs ftp to be installed separately in the package directory"
         echo -e "\n=========================================================================\n"
-        exit
     fi
     software=''
     read -p "Please Input:" software

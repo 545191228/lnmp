@@ -19,12 +19,32 @@ if [ -s pcre-8.35.tar.gz ]; then
   wget -c -P ${softDir} http://shp.name/lnmp/pcre-8.35.tar.gz || exit_ "wget pcre stoped."
 fi
 
+if [ -s openssl-1.0.1t.tar.gz ]; then
+  echo "openssl-1.0.1t.tar.gz [found]"
+  else
+  echo "Error: openssl-1.0.1t.tar.gz not found!!!download now......"
+  wget -c -P ${softDir} https://www.openssl.org/source/openssl-1.0.1t.tar.gz || exit_ "wget openssl stoped."
+fi
+
+if [ -s zlib-1.2.8.tar.gz ]; then
+  echo "zlib-1.2.8.tar.gz [found]"
+  else
+  echo "Error: zlib-1.2.8.tar.gz not found!!!download now......"
+  wget -c -P ${softDir} http://zlib.net/zlib-1.2.8.tar.gz || exit_ "wget openssl stoped."
+fi
+
 if [ -s nginx-${nginx_ver}.tar.gz ]; then
   echo "nginx-${nginx_ver}.tar.gz [found]"
   else
   echo "Error: nginx-${nginx_ver}.tar.gz not found!!!download now......"
   wget -c -P ${softDir} http://nginx.org/download/nginx-${nginx_ver}.tar.gz || exit_ "wget nginx stoped."
 fi
+
+tar zxf openssl-1.0.1t.tar.gz
+mv openssl-1.0.1t /usr/local/openssl
+
+tar zxf zlib-1.2.8.tar.gz
+mv zlib-1.2.8 /usr/local/zlib
 
 tar zxvf pcre-8.35.tar.gz
 mv pcre-8.35 /usr/local/pcre
@@ -40,7 +60,7 @@ ldconfig
 
 tar zxvf nginx-${nginx_ver}.tar.gz
 cd nginx-${nginx_ver}/
-./configure --user=www --group=www --prefix=/usr/local/nginx --with-http_stub_status_module --with-http_ssl_module --with-http_gzip_static_module --with-poll_module --with-threads --with-pcre=/usr/local/pcre || exit_ "configure stoped."
+./configure --user=www --group=www --prefix=/usr/local/nginx --with-http_stub_status_module --with-http_ssl_module --with-http_gzip_static_module --with-file-aio --with-http_realip_module --with-openssl=/usr/local/openssl --with-zlib=/usr/local/zlib --with-pcre=/usr/local/pcre || exit_ "configure stoped."
 make -j${lineCount} || exit_ "make stoped."
 make install || exit_ "make install stoped."
 cd ../
@@ -49,7 +69,7 @@ ln -s /usr/local/nginx/sbin/nginx /usr/bin/nginx
 
 rm -f /usr/local/nginx/conf/nginx.conf
 
-cp $confDir/nginx.conf-default /usr/local/nginx/conf/nginx.conf
+cp $confDir/nginx.conf /usr/local/nginx/conf/nginx.conf
 
 cd $softDir
 mkdir -p ${web_root}/wwwroot/default/www
@@ -75,6 +95,7 @@ server {
     listen              80;
     server_name        shop;
     root               ${web_root}/wwwroot/default/www;
+    aio threads;
     if (!-e $request_filename)
     {
         rewrite ^/(shop|admin|circle|microshop|cms)/(.*)html$ /$1/index.php?$2;

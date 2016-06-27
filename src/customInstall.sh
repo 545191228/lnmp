@@ -12,7 +12,7 @@ install_init
 
 while [ $# -ne 0 ]
 do
-    #eval install_$1
+    eval install_$1
     echo $1
     shift
 done
@@ -20,3 +20,4 @@ done
 echo "Installation completed."
 echo "The following is the installation information:"
 cat ${INST_INFO}
+exit

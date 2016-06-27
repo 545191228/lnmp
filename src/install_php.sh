@@ -13,7 +13,6 @@
 ####
 
 CheckAndDownloadFiles
-
 InstallDependsAndOpt
 
 cd $softDir
@@ -92,6 +91,6 @@ cp /usr/local/php/etc/php-fpm.conf.default /usr/local/php/etc/php-fpm.conf
 sed -i 's/;pid = run\/php-fpm.pid/pid = run\/php-fpm.pid/g' /usr/local/php/etc/php-fpm.conf
 
 echo "Copy php-fpm init.d file......"
-cp $cur_dir/php-${php_ver}/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm
+cp $softDir/php-${php_ver}/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm
 chmod +x /etc/init.d/php-fpm
 
