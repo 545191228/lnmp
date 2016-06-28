@@ -12,15 +12,15 @@
 
 ## Install packages version.
 
-php_big_ver='5.4'
-php_ver='5.4.40'
+php_big_ver='5.6'
+php_ver='5.6.23'
 
 mysql_big_ver='5.6'
-mysql_ver='5.6.21'
+mysql_ver='5.6.30'
 
-nginx_ver='1.6.0'
+nginx_ver='1.10.1'
 
-node_ver='v0.10.32'
+node_ver='v0.12.28'
 
 redis_ver='2.8.17'
 

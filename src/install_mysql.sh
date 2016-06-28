@@ -19,10 +19,7 @@ else
 	wget -c -P ${softDir} http://cdn.mysql.com/Downloads/MySQL-${mysql_big_ver}/${mysql_package} || exit_ "make wget stoped."
 fi
 
-echo "Unzip the installation package"
 tar zxf ${mysql_package}
-echo "unzip over"
-
 cd mysql-${mysql_ver}
 echo "============================Install MySQL ${mysql_ver}=================================="
 groupadd mysql
@@ -33,15 +30,16 @@ cmake -DCMAKE_INSTALL_PREFIX=/usr/local/mysql -DMYSQL_DATADIR=$mysql_data_dir -D
 make -j $lineCount || exit_ "make stoped."
 make install || exit_ "make install stoped."
 
+mkdir -p ${mysql_data_dir}
+chown -R mysql:mysql ${mysql_data_dir}
 
 cp /usr/local/mysql/support-files/my-default.cnf /etc/my.cnf
-
 sed "/# basedir = ...../i\ basedir = /usr/local/mysql" -i /etc/my.cnf
 sed "/# datadir = ...../i\ datadir = ${mysql_data_dir}\ndefault-storage-engine=INNODB" -i /etc/my.cnf
 sed -i 's:#innodb:innodb:g' /etc/my.cnf
 
 /usr/local/mysql/scripts/mysql_install_db --basedir=/usr/local/mysql --datadir=${mysql_data_dir} --user=mysql
-chown -R mysql ${mysql_data_dir}
+
 
 cp -f /usr/local/mysql/support-files/mysql.server /etc/init.d/mysql
 chmod +x /etc/init.d/mysql

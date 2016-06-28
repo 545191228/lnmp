@@ -24,19 +24,16 @@ if [ -s "${php_package}" ]; then
 	echo "${php_package} [found]"
 else
 	echo "Error: ${php_package} not found!!download now......"
-	wget -c -P ${softDir} http://cn2.php.net/distributions/${php_package} || exit_ "wget stopped."
+	wget -c -P ${softDir} http://cn2.php.net/distributions/${php_package} || exit_ "wget php stopped."
 fi
 
 # install
-echo "unzip install package"
 tar zxf $php_package
-echo "unzip end"
-
 cd php-$php_ver
+./configure --prefix=/usr/local/php --with-config-file-path=/usr/local/php/etc --enable-fpm --with-fpm-user=www --with-fpm-group=www --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --disable-rpath --enable-re2c-cgoto --disable-short-tags --with-libxml-dir --with-openssl --with-bz2 --with-zlib --enable-zip --enable-bcmath --with-zlib-dir --with-gettext --enable-mbstring --with-mcrypt --with-enchant --with-curl --enable-exif --disable-fileinfo --enable-ftp --with-gd --with-jpeg-dir --with-png-dir  --with-freetype-dir --enable-gd-native-ttf --enable-shmop --enable-pcntl --enable-sysvsem --enable-sysvshm --enable-sysvmsg --with-tidy --enable-ftp --with-openssl --with-mhash --enable-sockets --with-xmlrpc --enable-soap --without-pear --enable-mbregex --with-iconv-dir --with-pgsql --with-pod-pgsql --enable-shared || exit_ "configure php stopped."
 
-./configure --prefix=/usr/local/php --with-config-file-path=/usr/local/php/etc --enable-fpm --with-fpm-user=www --with-fpm-group=www --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --disable-rpath --enable-re2c-cgoto --disable-short-tags --with-libxml-dir --with-openssl --with-bz2 --with-zlib --enable-zip --enable-bcmath --with-zlib-dir --with-gettext --enable-mbstring --with-mcrypt --with-enchant --with-curl --enable-exif --disable-fileinfo --enable-ftp --with-gd --with-jpeg-dir --with-png-dir  --with-freetype-dir --enable-gd-native-ttf --enable-shmop --enable-pcntl --enable-sysvsem --enable-sysvshm --enable-sysvmsg --with-tidy --enable-ftp --with-openssl --with-mhash --enable-sockets --with-xmlrpc --enable-soap --without-pear --enable-mbregex --with-iconv-dir --with-pgsql --with-pod-pgsql --enable-shared
-
-make -j${lineCount} ZEND_EXTRA_LIBS='-liconv' && make install
+make -j${lineCount} ZEND_EXTRA_LIBS='-liconv' || exit_ "make php stopped."
+make install || exit_ "make isntall php stopped."
 
 rm -f /usr/bin/php
 ln -s /usr/local/php/bin/php /usr/bin/php
@@ -45,7 +42,7 @@ ln -s /usr/local/php/sbin/php-fpm /usr/bin/php-fpm
 
 echo "Copy new php configure file."
 mkdir -p /usr/local/php/etc
-cp php.ini-production /usr/local/php/etc/php.ini
+cp -f php.ini-production /usr/local/php/etc/php.ini
 
 # php confing
 echo "Modify php.ini......"

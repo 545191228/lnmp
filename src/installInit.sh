@@ -60,7 +60,7 @@ cd libiconv-1.14/
 make -j${lineCount} && make install
 cd ../
 
-cd $cur_dir
+cd $softDir
 tar zxvf libmcrypt-2.5.8.tar.gz
 cd libmcrypt-2.5.8/
 ./configure
@@ -71,7 +71,7 @@ cd libltdl/
 make -j${lineCount} && make install
 cd ../../
 
-cd $cur_dir
+cd $softDir
 tar zxvf mhash-0.9.9.9.tar.gz
 cd mhash-0.9.9.9/
 ./configure
@@ -80,7 +80,7 @@ cd ../
 
 ln -s /usr/local/lib/lib* /usr/lib/
 
-cd $cur_dir
+cd $softDir
 tar zxvf mcrypt-2.6.8.tar.gz
 cd mcrypt-2.6.8/
 ./configure
