@@ -19,29 +19,28 @@ cd $softDir
 
 if [ -s libiconv-1.14.tar.gz ]; then
   echo "libiconv-1.14.tar.gz [found]"
-  else
+else
   echo "Error: libiconv-1.14.tar.gz not found!!!download now......"
   wget -c -P ${softDir} http://shp.name/lnmp/libiconv-1.14.tar.gz
-  mv -f libiconv-1.14.tar.gz
 fi
 
 if [ -s libmcrypt-2.5.8.tar.gz ]; then
   echo "libmcrypt-2.5.8.tar.gz [found]"
-  else
+else
   echo "Error: libmcrypt-2.5.8.tar.gz not found!!!download now......"
   wget -c -P ${softDir} http://shp.name/lnmp/libmcrypt-2.5.8.tar.gz
 fi
 
 if [ -s mhash-0.9.9.9.tar.gz ]; then
   echo "mhash-0.9.9.9.tar.gz [found]"
-  else
+else
   echo "Error: mhash-0.9.9.9.tar.gz not found!!!download now......"
   wget -c -P ${softDir} http://shp.name/lnmp/mhash-0.9.9.9.tar.gz
 fi
 
 if [ -s mcrypt-2.6.8.tar.gz ]; then
   echo "mcrypt-2.6.8.tar.gz [found]"
-  else
+else
   echo "Error: mcrypt-2.6.8.tar.gz not found!!!download now......"
   wget -c -P ${softDir} http://shp.name/lnmp/mcrypt-2.6.8.tar.gz
 fi
@@ -53,15 +52,14 @@ echo "============================check files=================================="
 function InstallDependsAndOpt()
 {
 cd $softDir
-
-tar zxvf libiconv-1.14.tar.gz
+[ -d libiconv-1.14 ] || tar zxf libiconv-1.14.tar.gz
 cd libiconv-1.14/
 ./configure
 make -j${lineCount} && make install
 cd ../
 
 cd $softDir
-tar zxvf libmcrypt-2.5.8.tar.gz
+[ -d libmcrypt-2.5.8 ] || tar zxf libmcrypt-2.5.8.tar.gz
 cd libmcrypt-2.5.8/
 ./configure
 make -j${lineCount} && make install
@@ -72,7 +70,7 @@ make -j${lineCount} && make install
 cd ../../
 
 cd $softDir
-tar zxvf mhash-0.9.9.9.tar.gz
+[ -d mhash-0.9.9.9 ] || tar zxf mhash-0.9.9.9.tar.gz
 cd mhash-0.9.9.9/
 ./configure
 make -j${lineCount} && make install
@@ -81,9 +79,9 @@ cd ../
 ln -s /usr/local/lib/lib* /usr/lib/
 
 cd $softDir
-tar zxvf mcrypt-2.6.8.tar.gz
+[ -d mcrypt-2.6.8 ] || tar zxf mcrypt-2.6.8.tar.gz
 cd mcrypt-2.6.8/
-./configure
+./configure || exit_ "mcrypt configure stop"
 make -j${lineCount} && make install
 cd ../
 
