@@ -81,7 +81,7 @@ ln -s /usr/local/lib/lib* /usr/lib/
 cd $softDir
 [ -d mcrypt-2.6.8 ] || tar zxf mcrypt-2.6.8.tar.gz
 cd mcrypt-2.6.8/
-./configure || exit_ "mcrypt configure stop"
+./configure || exit_ "mcrypt configure stopped"
 make -j${lineCount} && make install
 cd ../
 

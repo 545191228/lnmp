@@ -29,7 +29,7 @@ fi
 
 # install
 tar zxf $php_package
-cd php-$php_ver
+cd php-${php_ver}
 ./configure --prefix=/usr/local/php --with-config-file-path=/usr/local/php/etc --enable-fpm --with-fpm-user=www --with-fpm-group=www --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --disable-rpath --enable-re2c-cgoto --disable-short-tags --with-libxml-dir --with-openssl --with-bz2 --with-zlib --enable-zip --enable-bcmath --with-zlib-dir --with-gettext --enable-mbstring --with-mcrypt --with-enchant --with-curl --enable-exif --disable-fileinfo --enable-ftp --with-gd --with-jpeg-dir --with-png-dir  --with-freetype-dir --enable-gd-native-ttf --enable-shmop --enable-pcntl --enable-sysvsem --enable-sysvshm --enable-sysvmsg --with-tidy --enable-ftp --with-openssl --with-mhash --enable-sockets --with-xmlrpc --enable-soap --without-pear --enable-mbregex --with-iconv-dir --with-pgsql --with-pod-pgsql --enable-shared || exit_ "configure php stopped."
 
 make -j${lineCount} ZEND_EXTRA_LIBS='-liconv' || exit_ "make php stopped."
@@ -90,4 +90,18 @@ sed -i 's/;pid = run\/php-fpm.pid/pid = run\/php-fpm.pid/g' /usr/local/php/etc/p
 echo "Copy php-fpm init.d file......"
 cp $softDir/php-${php_ver}/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm
 chmod +x /etc/init.d/php-fpm
+
+/etc/init.d/php-fpm start
+
+cat > ${insInfo} <<EOF
+=============== php install information =====================
+安装版本:
+php-${php_ver}
+安装目录:
+/usr/local/php
+配置文件路径:
+/usr/local/php/etc/php.ini
+控制命令:
+service php-fpm {start|stop|force-quit|restart|reload|status}
+EOF
 

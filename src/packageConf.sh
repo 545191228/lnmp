@@ -20,7 +20,7 @@ mysql_ver='5.6.30'
 
 nginx_ver='1.10.1'
 
-node_ver='v0.12.28'
+node_ver='v0.12.9'
 
 redis_ver='2.8.17'
 

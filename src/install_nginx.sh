@@ -133,3 +133,18 @@ server {
 
 }
 EOF
+
+
+cat >> ${insInfo} <<EOF
+=============== mysql install information =====================
+安装版本:
+mysql-${mysql_ver}
+安装目录:
+/usr/local/mysql
+配置文件路径:
+/etc/my.cnf
+数据目录：
+${mysql_data_dir}
+控制命令:
+service mysql {start|stop|force-quit|restart|reload|status}
+EOF

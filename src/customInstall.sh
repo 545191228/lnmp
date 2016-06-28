@@ -19,5 +19,5 @@ done
 
 echo "Installation completed."
 echo "The following is the installation information:"
-cat ${INST_INFO}
+cat ${insInfo}
 exit
