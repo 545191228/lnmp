@@ -22,5 +22,5 @@ fi
 	
 /etc/init.d/iptables restart
 	
-yum -y install wget patch make cmake gcc gcc-c++ gcc-g77 flex bison file libtool libtool-libs autoconf automake kernel-devel libjpeg libjpeg-devel libpng libpng-devel libpng10 libpng10-devel gd gd-devel freetype freetype-devel libxml2 libxml2-devel zlib zlib-devel glib2 glib2-devel bzip2 bzip2-devel libevent libevent-devel ncurses ncurses-devel curl curl-devel e2fsprogs e2fsprogs-devel krb5 krb5-devel libidn libidn-devel openssl openssl-devel vim-minimal nano fonts-chinese gettext gettext-devel ncurses-devel gmp-devel pspell-devel unzip libcap re2c enchant enchant-devel libtidy libtidy-devel libicu-devel postgresql-devel
+yum install -y wget patch make cmake gcc gcc-c++ gcc-g77 flex bison file libtool libtool-libs autoconf automake kernel-devel libjpeg libjpeg-devel libpng libpng-devel libpng10 libpng10-devel gd gd-devel freetype freetype-devel libxml2 libxml2-devel zlib zlib-devel glib2 glib2-devel bzip2 bzip2-devel libevent libevent-devel ncurses ncurses-devel curl curl-devel e2fsprogs e2fsprogs-devel krb5 krb5-devel libidn libidn-devel openssl openssl-devel vim-minimal nano fonts-chinese gettext gettext-devel ncurses-devel gmp-devel pspell-devel unzip libcap re2c enchant enchant-devel libtidy libtidy-devel libicu-devel postgresql-devel
 
