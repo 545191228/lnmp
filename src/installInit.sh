@@ -77,6 +77,8 @@ make -j${lineCount} && make install
 cd ../
 
 ln -s /usr/local/lib/lib* /usr/lib/
+#export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+/sbin/ldconfig
 
 cd $softDir
 [ -d mcrypt-2.6.8 ] || tar zxf mcrypt-2.6.8.tar.gz
@@ -108,7 +110,8 @@ if [ ! `grep -l '/usr/local/lib'    '/etc/ld.so.conf'` ]; then
     echo "/usr/local/lib" >> /etc/ld.so.conf
 fi
 
-ldconfig
+/sbin/ldconfig
+#ldconfig
 
 cat >>/etc/security/limits.conf<<eof
 * soft nproc 65535

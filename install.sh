@@ -43,7 +43,7 @@ readonly insLog=${curDir}/lnmp.log
 readonly insInfo=${curDir}/lnmp.info
 
 #Get the machine info
-if [ -n "`cat /etc/redhat-release 2>/dev/null  |grep CentOS`" ];then
+if [ -n "`cat /etc/redhat-release 2 > /dev/null | grep CentOS`" ];then
     readonly osName=CentOS
 #elif [ -n "`cat /etc/issue | grep bian`" ];then
 #    readonly osName=Debian
@@ -55,7 +55,7 @@ else
     echo -e "\033[31mDoes not support this OS, Please contact the author! \033[0m"
     kill -9 $$
 fi
-readonly osVersion=`cat /etc/issue |head -1|awk '{print $3}'`
+readonly osVersion=`cat /etc/issue | head -1 | awk '{print $3}'`
 readonly cpuType=`uname -p`
 readonly lineCount="$( grep 'processor' /proc/cpuinfo | sort -u | wc -l)"
 readonly memTotal=`free -m | grep Mem | awk '{print  $2}'` 
