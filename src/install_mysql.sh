@@ -87,7 +87,7 @@ rm -f /tmp/mysql_sec_script
 
 /etc/init.d/mysql restart
 
-cat > ${insInfo} <<EOF
+cat >> ${insInfo} <<EOF
 =============== mysql install information =====================
 安装版本:
 mysql-${mysql_ver}

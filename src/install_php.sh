@@ -93,7 +93,7 @@ chmod +x /etc/init.d/php-fpm
 
 /etc/init.d/php-fpm start
 
-cat > ${insInfo} <<EOF
+cat >> ${insInfo} <<EOF
 =============== php install information =====================
 安装版本:
 php-${php_ver}

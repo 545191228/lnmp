@@ -32,7 +32,24 @@ memcache_ver=''
 
 ## some dir config
 
-mysql_data_dir='/usr/local/mysql/data'
+base_root='/usr/local'
+web_data_root='/data'
+
+nginx_base_dir=${base_root}'/nginx'
+nginx_conf_dir=${nginx_base_dir}'/conf'
+nginx_vhost_dir=${nginx_conf_dir}'/vhosts'
+
+php_base_dir=${base_root}'/php'
+php_conf_dir=${php_base_dir}'/etc'
+php_ext_dir=${php_base_dir}'/'
+
+mysql_base_dir=${base_root}'/mysql'
+mysql_data_dir=${mysql_base_dir}'/data'
 mysql_root_pwd='root'
-web_root='/data'
+
+node_base_dir=${base_root}'/node'
+
+redis_base_dir=${base_root}'/redis'
+
+xs_base_dir=${base_root}'/xunsearch'
 

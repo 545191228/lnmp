@@ -82,7 +82,7 @@ function install_mysql()
 function install_nginx()
 {
     if ! grep '^NGINX_INSTALL$' ${insLog} > /dev/null 2>&1 ;then
-        addUser
+        id www >/dev/null 2>&1 || addUser
         source ${srcDir}/install_nginx.sh
         echo 'NGINX_INSTALL' >> ${insLog}
     fi
@@ -92,6 +92,7 @@ function install_nginx()
 function install_php()
 {
     if ! grep '^PHP_INSTALL$' ${insLog} > /dev/null 2>&1 ;then
+        id www >/dev/null 2>&1 || addUser
         source ${srcDir}/install_php.sh
         echo 'PHP_INSTALL' >> ${insLog}
     fi
@@ -102,9 +103,9 @@ function addUser()
 {
 	groupadd www
 	useradd www -r -s /sbin/nologin -g www
-	usermod -d $web_root www
 }
 
+# exit install
 exit_() {
     echo -en "\033[1;40;32m$*\033[0m\n";exit
 }

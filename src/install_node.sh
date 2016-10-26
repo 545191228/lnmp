@@ -24,8 +24,21 @@ echo "unzip over"
 cd node-${node_ver}
 
 echo "Compile the installation file and install"
-configure --prefix=/usr/local/node || exit_ "configure stopped."
+configure --prefix=/usr/local/node
 make -j$lineCount || exit_ "make stopped."
 make install || exit_ "make install stopped."
 echo "NodeJS success installed"
 
+ln -s /usr/local/node/bin/* /usr/bin/
+
+npm install -g pm2
+
+cat >> ${insInfo} <<EOF
+=============== node install information =====================
+安装版本:
+node-${node_ver}
+安装目录:
+/usr/local/node
+控制命令:
+service pm2-init.sh {start|stop|force-quit|restart|reload|status}
+EOF

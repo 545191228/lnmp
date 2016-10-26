@@ -69,18 +69,20 @@ ln -s /usr/local/nginx/sbin/nginx /usr/bin/nginx
 
 rm -f /usr/local/nginx/conf/nginx.conf
 
-cp $confDir/nginx.conf /usr/local/nginx/conf/nginx.conf
+cp ${confDir}/nginx.conf /usr/local/nginx/conf/nginx.conf
 
 cd $softDir
 mkdir -p ${web_root}/wwwroot/default/www
-chmod +w ${web_root}/wwwroot/default/www
 mkdir -p ${web_root}/wwwroot/default/logs
+
+chmod +w ${web_root}/wwwroot/default/www
 chmod 777 ${web_root}/wwwroot/default/logs
-mkdir -p /usr/local/nginx/conf/vhost
 
-chown -R www:www $web_root/wwwroot/default
+mkdir -p /usr/local/nginx/conf/vhosts
 
-cp $softDir/code/init.d.nginx /etc/init.d/nginx
+chown -R www:www ${web_root}/wwwroot/default
+
+cp ${softDir}/code/nginx/init-${osName} /etc/init.d/nginx
 chmod +x /etc/init.d/nginx
 
 mkdir -p /var/run/nginx
@@ -89,16 +91,25 @@ chmod 777 /var/run/nginx
 /etc/init.d/nginx start
 /etc/init.d/nginx stop
 
-touch /usr/local/nginx/conf/vhost/default.conf
-cat >>/usr/local/nginx/conf/vhost/default.conf<<EOF
+touch /usr/local/nginx/conf/vhosts/default.conf
+
+
+cat >>/usr/local/nginx/conf/vhosts/default.conf<<EOF
 server {
     listen              80;
-    server_name        shop;
+    listen              443;
+
+    server_name        _;
+
+    ssl_certificate     /etc/pki/tls/certs/server.pem;
+    ssl_certificate_key /etc/pki/tls/certs/server.pem;
+    ssl_session_cache   shared:SSL:128m;
+
     root               ${web_root}/wwwroot/default/www;
-    aio threads;
-    if (!-e $request_filename)
+
+    if (!-e \$request_filename)
     {
-        rewrite ^/(shop|admin|circle|microshop|cms)/(.*)html$ /$1/index.php?$2;
+        rewrite ^/(.*)html$ /index.php?\$1;
 
     }
     location ~ /(cache|upload|sql_back|resource|templates)/.*\.php$
@@ -123,17 +134,24 @@ server {
     }
 
     location ~ \.php$ {
-        try_files $uri =404;
+        try_files \$uri =404;
         access_log  ${web_root}/wwwroot/default/logs/access.log  main buffer=16k;
         error_log  ${web_root}/wwwroot/default/logs/error.log error;
         fastcgi_pass 127.0.0.1:9000;
         include fastcgi.conf;
-        fastcgi_param PATH_INFO $request_uri;
     }
 
+    location ~ /status$ {
+        stub_status on;
+        allow 127.0.0.1;
+        deny  all;
+    }
 }
 EOF
 
+${softDir}/code/certs.sh
+
+/etc/init.d/nginx start
 
 cat >> ${insInfo} <<EOF
 =============== mysql install information =====================

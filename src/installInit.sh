@@ -77,7 +77,7 @@ make -j${lineCount} && make install
 cd ../
 
 ln -s /usr/local/lib/lib* /usr/lib/
-#export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+
 /sbin/ldconfig
 
 cd $softDir
@@ -111,7 +111,6 @@ if [ ! `grep -l '/usr/local/lib'    '/etc/ld.so.conf'` ]; then
 fi
 
 /sbin/ldconfig
-#ldconfig
 
 cat >>/etc/security/limits.conf<<eof
 * soft nproc 65535
