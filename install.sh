@@ -43,7 +43,7 @@ readonly insLog=${curDir}/lnmp.log
 readonly insInfo=${curDir}/lnmp.info
 
 #Get the machine info
-if [ -n "`cat /etc/redhat-release 2 > /dev/null | grep CentOS`" ];then
+if [ -n "`cat /etc/redhat-release 2>/dev/null | grep CentOS`" ];then
     readonly osName=CentOS
 #elif [ -n "`cat /etc/issue | grep bian`" ];then
 #    readonly osName=Debian
